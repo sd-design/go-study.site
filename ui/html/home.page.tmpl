@@ -1,0 +1,24 @@
+{{template "base" .}}
+{{define "title"}}Home - VPS server by Golang{{end}}
+{{define "main"}}
+<h2 class="head-1 uk-text-uppercase">Golang пэт-проект на VPS</h2>
+
+<div class="uk-child-width-1-2@m uk-grid-small uk-grid-match" uk-grid>
+    <div>
+        <div class="uk-card uk-card-default uk-card-body">
+            <h3 class="uk-card-title">Quote</h3>
+    <p>There's nothing to see here yet!</p>
+<p class="fs-2">It was the flexibility, how easy it was to use, and the really cool concept behind Go....</p>
+<p class="text-end"><small>— Jaime Enrique Garcia Lopez, Senior Software Development Manager at Capital One</small></p>
+        </div>
+    </div>
+    <div>
+        <div class="uk-card uk-card-primary uk-card-body d-shadow-20">
+                <h3 class="uk-card-title">Пример скачивания файла</h3>
+<p class="fs-2"><a href="/download?file=CLEAN_SKIN_presentation.jpg" download>скачать файл</a></p>
+<p class="text-end"><small><a href="/download?file=NO_exist_file.jpg" download>несуществующий файл</a></small></p>
+        </div>
+    </div>
+</div>
+
+{{end}}

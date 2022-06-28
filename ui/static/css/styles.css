@@ -1,0 +1,13 @@
+html, body, h1, h2, h3, h4, h5, h6{font-family: 'Source Sans Pro', sans-serif;}
+.head-1 {
+	font-weight: 700;
+}
+.d-shadow-9 {
+	box-shadow: 0 5px 15px rgb(0 0 0 / 9%);
+}
+.d-shadow-20 {
+	box-shadow: 0 5px 15px rgb(0 0 0 / 20%);
+}
+.d-shadow-40 {
+	box-shadow: 0 5px 15px rgb(0 0 0 / 40%);
+}

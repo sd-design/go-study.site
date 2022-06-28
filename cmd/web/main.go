@@ -21,6 +21,8 @@ func main() {
     // Design Handlers
     mux.HandleFunc(designDomain+"/", designIndex)
     mux.HandleFunc("/download/", downloadHandler)
+    fileServer := http.FileServer(http.Dir("./ui/static/"))
+    mux.Handle("/static/", http.StripPrefix("/static", fileServer))
 
     log.Println("Starting server 8080", mux)
     err := http.ListenAndServe(":8080", mux)
