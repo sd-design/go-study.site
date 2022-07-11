@@ -1,0 +1,1 @@
+console.log('%c My Vue App', 'background: #222; color: #bada55; padding:15px')
