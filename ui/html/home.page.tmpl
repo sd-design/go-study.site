@@ -1,7 +1,15 @@
 {{template "base" .}}
 {{define "title"}}Home - VPS server by Golang{{end}}
 {{define "main"}}
-<h2 class="head-1 uk-text-uppercase">Golang пэт-проект на VPS</h2>
+<div class="uk-flex">
+    <div>
+        <h2 class="head-1 uk-text-uppercase">Golang пэт-проект на VPS</h2>
+    </div>
+    <div class="uk-margin-left">
+{{template "menu" .}}
+    </div>
+</div>
+
 
 <div class="uk-child-width-1-2@m uk-grid-small uk-grid-match" uk-grid>
     <div>

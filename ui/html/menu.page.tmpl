@@ -1,0 +1,17 @@
+{{template "base" .}}
+{{define "menu"}}
+
+<button class="uk-button uk-button-default" type="button">Меню</button>
+<div uk-dropdown>
+    <ul class="uk-nav uk-dropdown-nav">
+        <li class="uk-active"><a href="/">Главная</a></li>
+        <li><a href="/blog">Блог</a></li>
+        <li class="uk-nav-header">Header</li>
+        <li><a href="/lk">Личный кабинет</a></li>
+        <li><a href="#">Item</a></li>
+        <li class="uk-nav-divider"></li>
+        <li><a href="/contacts">Контакты</a></li>
+    </ul>
+</div>
+
+{{end}}
