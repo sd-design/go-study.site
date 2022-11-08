@@ -6,13 +6,6 @@ import (
 	"net/http"
 )
 
-const (
-	domain       = "localhost" //Don't forget to change URL
-	blogDomain   = "blog." + domain
-	adminDomain  = "admin." + domain
-	designDomain = "design." + domain
-)
-
 func home(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
