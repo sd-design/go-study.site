@@ -6,14 +6,28 @@ import (
 	"net/http"
 )
 
+type Client struct {
+	role string
+	ip   string
+}
+
+type View struct {
+	Client Client
+}
+
 func home(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
 		return
 	}
+	//ip_address := r.Header.Get("X-Real-IP")
+	newClient := Client{role: "client", ip: "0.0.0.0"}
+	data := View{Client: newClient}
+
 	// Initialize a slice containing the paths to the two files. Note that the
 	// home.page.tmpl file must be the *first* file in the slice.
 	files := []string{
+		"./ui/html/client.page.tmpl",
 		"./ui/html/menu.page.tmpl",
 		"./ui/html/home.page.tmpl",
 		"./ui/html/base.layout.tmpl",
@@ -27,7 +41,8 @@ func home(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Internal Server Error", 500)
 		return
 	}
-	err = ts.Execute(w, nil)
+	//log.Println(data.role)
+	err = ts.Execute(w, data)
 	if err != nil {
 		log.Println(err.Error())
 		http.Error(w, "Internal Server Error", 500)
