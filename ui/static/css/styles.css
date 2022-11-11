@@ -1,4 +1,4 @@
-html, body, h1, h2, h3, h4, h5, h6{font-family: 'Source Sans Pro', sans-serif;}
+html, body, h1, h2, h3, h4, h5, h6{font-family: 'JetBrains Mono', monospace;}
 .head-1 {
 	font-weight: 700;
 }
@@ -10,4 +10,15 @@ html, body, h1, h2, h3, h4, h5, h6{font-family: 'Source Sans Pro', sans-serif;}
 }
 .d-shadow-40 {
 	box-shadow: 0 5px 15px rgb(0 0 0 / 40%);
+}
+.uk-button.uk-button-default
+{
+	font-family: 'JetBrains Mono', monospace;
+	font-weight: 700;
+}
+.level-1::before
+{
+	color: blue;
+	content: "├─";
+	font-family: 'JetBrains Mono', monospace;
 }

@@ -20,7 +20,9 @@ func home(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	ip_address := r.Header.Get("X-Real-IP")
+	//ip_address := r.Header.Get("X-Real-IP")
+	ip_address := r.Header.Get("x-forwarded-for")
+
 	newClient := Client{"client", ip_address}
 	data := View{Client: newClient}
 
