@@ -1,12 +1,12 @@
 {{template "base" .}}
 {{define "client"}}
 
-    {{if .View}} 
+    {{if .Client}} 
 <h3 class="uk-card-title">User info</h3>
     
 
-        <p>Role: {{ .View.Client.role}}</p>
-        <p class="text-end"><small>{{ .ip}}</small></p>
+        <p>Role: {{ .Client.Role}}</p>
+        <p class="text-end"><small>IP-address: {{ .Client.Ip}}</small></p>
 
     {{end}}
 {{end}}

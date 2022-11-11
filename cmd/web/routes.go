@@ -5,27 +5,29 @@ import (
 	"net/http"
 )
 
-const (
-	domain       = "localhost" //Don't forget to change URL
-	blogDomain   = "blog." + domain
-	adminDomain  = "admin." + domain
-	designDomain = "design." + domain
-)
+// Sub domains constants
+
+// const (
+// 	domain       = "localhost" //Don't forget to change URL
+// 	blogDomain   = "blog." + domain
+// 	adminDomain  = "admin." + domain
+// 	designDomain = "design." + domain
+// )
 
 func startRouter() {
 	mux := http.NewServeMux()
 	// Default Handlers
-	mux.HandleFunc(domain+"/", home)
+	mux.HandleFunc("/", home)
 
 	// Blog Handlers
-	mux.HandleFunc(blogDomain+"/", blogIndex)
+	mux.HandleFunc("/blog", blogIndex)
 
 	// Admin Handlers
-	mux.HandleFunc(adminDomain+"/", adminIndex)
+	mux.HandleFunc("/admin", adminIndex)
 
 	// Design Handlers
-	mux.HandleFunc(designDomain+"/", designIndex)
-	mux.HandleFunc(domain+"/download/", downloadHandler)
+	mux.HandleFunc("/design", designIndex)
+	mux.HandleFunc("/download/", downloadHandler)
 	fileServer := http.FileServer(http.Dir("./ui/static/"))
 	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
 

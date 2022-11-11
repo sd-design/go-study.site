@@ -7,8 +7,8 @@ import (
 )
 
 type Client struct {
-	role string
-	ip   string
+	Role string
+	Ip   string
 }
 
 type View struct {
@@ -20,8 +20,8 @@ func home(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	//ip_address := r.Header.Get("X-Real-IP")
-	newClient := Client{role: "client", ip: "0.0.0.0"}
+	ip_address := r.Header.Get("X-Real-IP")
+	newClient := Client{"client", ip_address}
 	data := View{Client: newClient}
 
 	// Initialize a slice containing the paths to the two files. Note that the
@@ -50,14 +50,14 @@ func home(w http.ResponseWriter, r *http.Request) {
 }
 
 func designIndex(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Designa maina domain"))
+	w.Write([]byte("Designa maina part"))
 }
 
 func blogIndex(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Blog domain"))
+	w.Write([]byte("Blog part"))
 }
 func adminIndex(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Admin domain"))
+	w.Write([]byte("Admin part"))
 }
 
 func downloadHandler(w http.ResponseWriter, r *http.Request) {
@@ -70,6 +70,8 @@ func downloadHandler(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	} else {
+		w.Header().Set("Content-Disposition", "attachment; filename="+file)
+		w.Header().Set("Content-Type", r.Header.Get("Content-Type"))
 		http.ServeFile(w, r, "./ui/downloads/"+file)
 	}
 }
