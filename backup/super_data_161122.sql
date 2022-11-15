@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Ноя 15 2022 г., 12:04
--- Версия сервера: 5.7.26
--- Версия PHP: 7.4.2
+-- Время создания: Ноя 16 2022 г., 00:43
+-- Версия сервера: 8.0.31-0ubuntu0.20.04.1
+-- Версия PHP: 7.4.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,10 +28,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `files` (
-  `id` int(11) NOT NULL,
-  `title` varchar(100) NOT NULL,
-  `filename` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id` int NOT NULL,
+  `title` varchar(100) CHARACTER SET utf8mb3 NOT NULL,
+  `filename` text CHARACTER SET utf8mb3 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -40,11 +40,18 @@ CREATE TABLE `files` (
 --
 
 CREATE TABLE `passwords` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `system` varchar(150) NOT NULL,
-  `pwd` varchar(77) NOT NULL,
+  `id` int UNSIGNED NOT NULL,
+  `system_name` varchar(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `pwd` varchar(77) CHARACTER SET utf8mb3 NOT NULL,
   `expires` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Дамп данных таблицы `passwords`
+--
+
+INSERT INTO `passwords` (`id`, `system_name`, `pwd`, `expires`) VALUES
+(1, 'Gmail', 'HELLOpwd2022', '2023-09-14 11:46:11');
 
 -- --------------------------------------------------------
 
@@ -53,13 +60,13 @@ CREATE TABLE `passwords` (
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `login` varchar(100) NOT NULL,
-  `pwd` varchar(77) NOT NULL,
-  `restore_key` varchar(128) NOT NULL,
+  `id` int NOT NULL,
+  `login` varchar(100) CHARACTER SET utf8mb3 NOT NULL,
+  `pwd` varchar(77) CHARACTER SET utf8mb3 NOT NULL,
+  `restore_key` varchar(128) CHARACTER SET utf8mb3 NOT NULL,
   `created` datetime NOT NULL,
   `expires` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Дамп данных таблицы `users`
@@ -99,19 +106,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `files`
 --
 ALTER TABLE `files`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `passwords`
 --
 ALTER TABLE `passwords`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

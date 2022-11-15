@@ -75,7 +75,7 @@ const insertPwdConstroller = (req, res) => {
 
   //Pwd needs to be Encrypted
   let insertRow = [system, pwd, '2023-09-14 11:46:11']
-  let sql = "INSERT INTO passwords(system, pwd, expires) VALUES(?, ?, ?)";
+  let sql = "INSERT INTO passwords(system_name, pwd, expires) VALUES(?, ?, ?)";
 
   let connection = mysql.createConnection({
     host     : 'localhost',
