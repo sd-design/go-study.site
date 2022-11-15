@@ -1,11 +1,11 @@
 const express = require('express')
-const mysql = require('mysql')
+const mysql = require('mysql2')
 const app = express()
 
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
-const port = 6000
+const port = 4200
 const mysqlLogin = 'golang'
 const mysqlPwd = 'GOlang2022RULEs+'
 
@@ -32,11 +32,11 @@ const listPwdController = (req, res) => {
   connection.connect();
   let result = {}
    
-  connection.query('SELECT * FROM users', function (error, results, fields) {
+  connection.query('SELECT * FROM passwords', function (error, results, fields) {
     if (error) throw error;
-    console.log('The solution is: ', results[0]);
+    console.log(results[0]);
     result = results[0]; 
-    res.json(result)   
+    res.json(results)
   });
    
   connection.end();
@@ -50,32 +50,32 @@ const connectController = (req, res) => {
     password : mysqlPwd,
     database : 'super_data'
   });
-  
-  if(connection.connect()){
-    console.log('connect is true');
-  } 
+  connection.connect(function(err) {
+    if (err) {
+      console.error('error connecting: ' + err.stack);
+      return;
+    }
+
+    console.log('connected as id ' + connection.threadId);
+    res.json({'connection': true})
+  });
    
   connection.end();
 
-  res.json({'connection':true})
+
 
 }
 
 const insertPwdConstroller = (req, res) => {
 
-  //console.log(req.body.system, req.body.pwd)
+  console.log(req.body.system, req.body.pwd)
 
   let system = req.body.system
   let pwd = req.body.pwd
 
   //Pwd needs to be Encrypted
- 
-  // let response = {
-  //   'system':system, 
-  //   'password':pwd
-  // }
-  //console.log(response)
-  
+  let insertRow = [system, pwd, '2023-09-14 11:46:11']
+  let sql = "INSERT INTO passwords(system, pwd, expires) VALUES(?, ?, ?)";
 
   let connection = mysql.createConnection({
     host     : 'localhost',
@@ -84,7 +84,7 @@ const insertPwdConstroller = (req, res) => {
     database : 'super_data'
   });
 
-  connection.query('INSERT INTO passwords SET ?', {system: system, pwd: pwd, expires: '2023-09-14 11:46:11'}, function (error, results, fields) {
+  connection.query(sql, insertRow, function (error, results, fields) {
     if (error) throw error;
     console.log(results.insertId);
     res.json(results.insertId)
