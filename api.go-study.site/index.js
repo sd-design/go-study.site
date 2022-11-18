@@ -1,5 +1,6 @@
 const express = require('express')
 const mysql = require('mysql2')
+const { encrypt, decrypt } = require('./crypto')
 const app = express()
 
 app.use(express.json()) // for parsing application/json
@@ -35,7 +36,6 @@ const listPwdController = (req, res) => {
   connection.query('SELECT * FROM passwords', function (error, results, fields) {
     if (error) throw error;
     console.log(results[0]);
-    result = results[0]; 
     res.json(results)
   });
    
@@ -61,9 +61,36 @@ const connectController = (req, res) => {
   });
    
   connection.end();
+}
 
+const cryptoController = (req, res) => {
 
+  let hash = encrypt('I love cupcakes')
 
+  console.log(hash);
+  res.json({'hash': hash})
+}
+
+const decryptController = (req, res) => {
+
+  let hash= {
+    iv: '620a658ae9fd09231317031181175dfb',
+    content: '022122e37a5f11ca1767ca2006bfc7'
+  }
+  let string = decrypt(hash)
+  res.json({'decrypt_string': string})
+}
+const decryptMysqlController = (req, res) => {
+
+  let hash= {iv: '620a658ae9fd09231317031181175dfb', content: '022122e37a5f11ca1767ca2006bfc7'}
+  let string = JSON.stringify(hash)
+  res.set({
+    'Content-Type': 'text/plain',
+    'charset': 'UTF-8'
+  })
+
+  res.send(string)
+  res.status(200).end()
 }
 
 const insertPwdConstroller = (req, res) => {
@@ -95,7 +122,11 @@ const insertPwdConstroller = (req, res) => {
 app.get('/', indexController)
 app.get('/connect', connectController)
 app.get('/passwords', listPwdController)
+app.get('/hash', cryptoController)
+app.get('/read_hash', decryptController)
+app.get('/mysql_hash', decryptMysqlController)
 app.post('/add_pwd', insertPwdConstroller)
+
 
 
 app.listen(port, () => {
