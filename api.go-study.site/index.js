@@ -64,9 +64,7 @@ const connectController = (req, res) => {
 }
 
 const cryptoController = (req, res) => {
-
   let hash = encrypt('I love cupcakes')
-
   console.log(hash);
   res.json({'hash': hash})
 }
@@ -99,10 +97,12 @@ const insertPwdConstroller = (req, res) => {
 
   let system = req.body.system
   let pwd = req.body.pwd
+  let date = new Date()
+  let expires = date.getFullYear() +"-"+date.getMonth()+"-"+date.getDate()+ " " + date.toLocaleTimeString()
 
   //Pwd needs to be Encrypted
-  let insertRow = [system, pwd, '2023-09-14 11:46:11']
-  let sql = "INSERT INTO passwords(system_name, pwd, expires) VALUES(?, ?, ?)";
+  let insertRow = [system, pwd]
+  let sql = "INSERT INTO passwords(system_name, pwd, expires) VALUES(?, ?, DATE_ADD(UTC_TIMESTAMP(), INTERVAL 180 DAY))";
 
   let connection = mysql.createConnection({
     host     : 'localhost',
@@ -116,7 +116,14 @@ const insertPwdConstroller = (req, res) => {
     console.log(results.insertId);
     res.json(results.insertId)
   });
+}
 
+const getTokenController = (req, res) => {
+  let response = {
+    'API version' : '0.1',
+    'Your IP-address': 'ya-ay token'
+  }
+  res.json(response)
 }
 
 app.get('/', indexController)
@@ -126,6 +133,7 @@ app.get('/hash', cryptoController)
 app.get('/read_hash', decryptController)
 app.get('/mysql_hash', decryptMysqlController)
 app.post('/add_pwd', insertPwdConstroller)
+app.get('/get_token', getTokenController)
 
 
 
