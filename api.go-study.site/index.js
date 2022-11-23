@@ -1,10 +1,10 @@
 const express = require('express')
-const mysql = require('mysql2')
 const { encrypt, decrypt } = require('./crypto')
 const app = express()
 const port = 4200
 const passwords = require('./routes/passwords')
-const utils = require('./routes/passwords')
+const utils = require('./routes/utils')
+const auth = require('./routes/auth')
 
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
@@ -23,6 +23,7 @@ const indexController = (req, res) => {
 
 app.use('/passwords', passwords);
 app.use('/utils', utils);
+app.use('/auth', auth);
 app.get('/', indexController)
 app.use((req, res, next) => {
   res.status(404)

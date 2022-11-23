@@ -21,3 +21,4 @@ api.go-study.site/package-lock.json
 
 /.idea/*
 .DS_Store
+key.json

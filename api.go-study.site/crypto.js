@@ -1,7 +1,14 @@
 const crypto = require('crypto');
+const fs = require('fs');
+let secretKey = ''
+
+fs.readFile('../key.json', {encoding:'utf-8'},function(error, contents){
+    const secret = JSON.parse(contents)
+    secretKey = secret.key
+});
 
 const algorithm = 'aes-256-ctr'
-const secretKey = 'vOVH6sdmpNWjRRIqCc7rdxs01lwHzfr3'
+
 
 const encrypt = text => {
     const iv = crypto.randomBytes(16)
@@ -12,7 +19,7 @@ const encrypt = text => {
 
     return {
         iv: iv.toString('hex'),
-        content: encrypted.toString('hex')
+        hash: encrypted.toString('hex')
     }
 }
 
