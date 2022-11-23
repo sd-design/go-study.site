@@ -35,7 +35,6 @@ const insertPwdConstroller = (req, res) => {
     let system = req.body.system
     let pwd = req.body.pwd
     let date = new Date()
-    let expires = date.getFullYear() +"-"+date.getMonth()+"-"+date.getDate()+ " " + date.toLocaleTimeString()
 
     //Pwd needs to be Encrypted
     let insertRow = [system, pwd]
