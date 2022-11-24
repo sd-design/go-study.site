@@ -1,5 +1,5 @@
 const express = require('express')
-const {encrypt, decrypt} = require("../crypto");
+const {encrypt, decrypt} = require("../modules/crypto");
 const router = express.Router()
 
 const cryptoController = (req, res) => {
@@ -11,8 +11,8 @@ const cryptoController = (req, res) => {
 const decryptController = (req, res) => {
 
     let hash= {
-        iv: '620a658ae9fd09231317031181175dfb',
-        content: '022122e37a5f11ca1767ca2006bfc7'
+        iv: '4fb62ce25d811e5a5823232fc9006547',
+        content: '28c4749e72b4721e7663acc3e545ab'
     }
     let string = decrypt(hash)
     res.json({'decrypt_string': string})

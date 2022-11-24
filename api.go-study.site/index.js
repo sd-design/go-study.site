@@ -1,5 +1,4 @@
 const express = require('express')
-const { encrypt, decrypt } = require('./crypto')
 const app = express()
 const port = 4200
 const passwords = require('./routes/passwords')
