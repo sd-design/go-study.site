@@ -28,6 +28,10 @@ func startRouter() {
 	// Design Handlers
 	mux.HandleFunc("/design", designIndex)
 	mux.HandleFunc("/download/", downloadHandler)
+
+	// Blog Handlers
+	mux.HandleFunc("/pwd", pwdIndex)
+
 	fileServer := http.FileServer(http.Dir("./ui/static/"))
 	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
 

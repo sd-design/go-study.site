@@ -7,31 +7,8 @@ const router = express.Router()
 
 const mysqlLogin = 'golang'
 const mysqlPwd = 'GOlang2022RULEs+'
-let device = 0
-const createToken = async (req, userID) => {
 
-    let date = new Date()
-    let expires = date.setMonth(date.getMonth()+2);
 
-    let parts = {
-        id: userID,
-        "userAgent": req.headers['user-agent'],
-        "ip": req.headers['x-forwarded-for'],
-        "expires": expires,
-    }
-    let tmp_tkn = encrypt(JSON.stringify(parts))
-    // console.log(tmp_tkn)
-
-    let token = tmp_tkn.hash + tmp_tkn.iv
-    let getID = await insertDBtoken(userID, token, req.headers['user-agent'], tmp_tkn.iv)
-    console.log(getID)
-    let response = {
-        device: getID,
-        token: token
-    }
-    return response
-
-}
 const getToken = (req, res) => {
     let userAgent = req.headers['user-agent']
     console.log(userAgent)
@@ -70,28 +47,27 @@ const loginUser = (req, res) => {
         // console.log(results)
         if(results.length == 0){
             res.status(400)
-            res.json({'response': false, 'desccription':'No user'})
+            res.json({'response': false, 'description':'No user'})
         }
         else{
-            // console.log(results[0].pwd)
+            // console.log(results[0].pwd)///////////////////////////
             bcrypt.compare(password, results[0].pwd, function(err, result) {
                 if(result){
-                    let data = createToken(req, results[0].id)
-                    let response = {response: result, token: data.token, device: data.device}
-                    res.json(response)
+                    createToken(req, res, result, results[0].id)
                 }
                 else{
                     res.status(401)
                     res.json(result)
                 }
             });
+
         }
     });
     connection.end();
 
 }
 
-const insertDBtoken = async (userID, token, userAgent, refreshToken) => {
+const insertDBToken = async (userID, token, userAgent, refreshToken) => {
 
     let connection = mysql.createConnection({
         host     : 'localhost',
@@ -104,7 +80,7 @@ const insertDBtoken = async (userID, token, userAgent, refreshToken) => {
     let insertRow = [userID, token, userAgent, refreshToken]
     let sql = "INSERT INTO tokens(user_id, token, user_agent, refresh_token, expires) VALUES(?, ?, ?, ?, DATE_ADD(UTC_TIMESTAMP(), INTERVAL 60 DAY))";
 
-    return await connection.query(sql, insertRow)
+    return connection.query(sql, insertRow)
         .then((result) =>{
             return result
         })
@@ -120,6 +96,27 @@ const insertDBtoken = async (userID, token, userAgent, refreshToken) => {
     //console.log(idDevice)
 }
 
+const createToken = (req, res, result, userID) => {
+
+    let date = new Date()
+    let expires = date.setMonth(date.getMonth()+2);
+
+    let parts = {
+        id: userID,
+        "userAgent": req.headers['user-agent'],
+        "ip": req.headers['x-forwarded-for'],
+        "expires": expires,
+    }
+    let tmp_tkn = encrypt(JSON.stringify(parts))
+    // console.log(tmp_tkn)
+
+    let token = tmp_tkn.hash + tmp_tkn.iv
+    insertDBToken(userID, token, req.headers['user-agent'], tmp_tkn.iv)
+        .then((device)=>{
+            let response = {response: result, token: token, device: device}
+            res.json(response)
+        })
+}
 
 const getHash = (req, res) => {
     let password = req.body.pwd;

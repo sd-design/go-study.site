@@ -1,1 +1,1 @@
-console.log('%c My Styudy proect of Golang App', 'background: #222; color: #bada55; padding:15px')
+console.log('%c My Study proect of Golang App', 'background: #222; color: #bada55; padding:15px')

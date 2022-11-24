@@ -1,0 +1,32 @@
+{{define "base"}}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{{template "title" .}} - Go-study.site</title>
+	<!-- UIkit CSS -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;400;700;800&display=swap" rel="stylesheet">
+<!-- end Fonts -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.14.3/dist/css/uikit.min.css" />
+<link href="/static/css/styles.css" rel="stylesheet">
+<link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
+
+<!-- UIkit JS -->
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.14.3/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.14.3/dist/js/uikit-icons.min.js"></script>
+
+</head>
+<body>
+	<div class="uk-container uk-margin-medium-top">
+	{{template "main" .}}
+	</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/uikit@[uikit-version]/dist/js/uikit.min.js"></script>
+<script src="static/js/pwd.js"></script>
+</html>
+
+{{end}}
