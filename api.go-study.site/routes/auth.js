@@ -28,6 +28,7 @@ const refreshToken = (req, res) => {
 }
 
 const loginUser = (req, res) => {
+    //console.log(req.body)
     let login = req.body.login;
     let password = req.body.pwd;
 
@@ -57,7 +58,8 @@ const loginUser = (req, res) => {
                 }
                 else{
                     res.status(401)
-                    res.json(result)
+                    res.json({response: result})
+                    res.end()
                 }
             });
 

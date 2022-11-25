@@ -7,6 +7,7 @@ const mysqlPwd = 'GOlang2022RULEs+'
 
 
 const listPwdController = (req, res) => {
+    // console.log(req.headers)
 
     let connection = mysql.createConnection({
         host     : 'localhost',
@@ -20,7 +21,7 @@ const listPwdController = (req, res) => {
 
     connection.query('SELECT * FROM passwords', function (error, results, fields) {
         if (error) throw error;
-        console.log(results[0]);
+        // console.log(results[0]);
         res.json(results)
     });
 

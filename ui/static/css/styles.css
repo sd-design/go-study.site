@@ -22,3 +22,14 @@ html, body, h1, h2, h3, h4, h5, h6{font-family: 'JetBrains Mono', monospace;}
 	content: "├─";
 	font-family: 'JetBrains Mono', monospace;
 }
+
+.disabled {
+	display: none;
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0s, opacity 0.5s linear;
+}
+.enable{
+	visibility: visible;
+	opacity: 1;
+}

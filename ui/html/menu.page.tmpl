@@ -1,20 +1,22 @@
 {{template "base" .}}
 {{define "menu"}}
-
-<button class="uk-button uk-button-default" type="button">Меню</button>
-<div uk-dropdown>
-    <ul class="uk-nav uk-dropdown-nav">
-        <li class="uk-active"><a href="/">Главная</a></li>
-        <li><a href="/about" class="level-1">About</a></li>
-        <li><a href="/blog" class="level-1">Blog</a></li>
-        <li class="uk-nav-header">PARTS</li>
-        <li><a href="/pwd" class="level-1">Secure part</a></li>
-        <li><a href="/admin" class="level-1">Admin part</a></li>
-        <li><a href="/design" class="level-1">Design part</a></li>
-        <li><a href="#" class="level-1">Item</a></li>        
-        <li class="uk-nav-divider"></li>
-        <li><a href="/contacts" class="level-1">Contacts</a></li>
-    </ul>
-</div>
+<div>
+        <button class="uk-button uk-button-default" type="button" id="generalMenu">Меню</button>
+        <div uk-dropdown>
+            <ul class="uk-nav uk-dropdown-nav">
+                <li class="uk-active"><a href="/">Главная</a></li>
+                <li><a href="/about" class="level-1">About</a></li>
+                <li><a href="/blog" class="level-1">Blog</a></li>
+                <li class="uk-nav-header">PARTS</li>
+                <li><a href="/pwd" class="level-1">Secure part</a></li>
+                <li><a href="/admin" class="level-1">Admin part</a></li>
+                <li><a href="/design" class="level-1">Design part</a></li>
+                <li><a href="#" class="level-1">Item</a></li>
+                <li class="uk-nav-divider"></li>
+                <li><a href="/contacts" class="level-1">Contacts</a></li>
+            </ul>
+        </div>
+        <button class="uk-button uk-button-primary uk-animation-scale-down uk-animation-toggle  enable disabled" type="button" id="logOut">Выйти</button>
+    </div>
 
 {{end}}

@@ -7,6 +7,19 @@ const auth = require('./routes/auth')
 
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept, authorization-token');
+  next();
+});
+
+app.use(function (req, res, next) {
+  checkAutorization(req, res)
+
+  next();
+});
+
 app.disable('x-powered-by');
 
 
@@ -18,6 +31,10 @@ const indexController = (req, res) => {
     'Your IP-address': IPaddr
   }
   res.json(response)
+}
+
+const checkAutorization = (req, res) => {
+  console.log(req.url)
 }
 
 app.use('/passwords', passwords);
