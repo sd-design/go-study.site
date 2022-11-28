@@ -5,8 +5,7 @@ const saltRounds = 10;
 const {encrypt, decrypt} = require("../modules/crypto");
 const router = express.Router()
 
-const mysqlLogin = 'golang'
-const mysqlPwd = 'GOlang2022RULEs+'
+const {mysqlLogin, mysqlPwd} = require("../modules/authorization");
 
 
 const getToken = (req, res) => {

@@ -1,13 +1,31 @@
 const express = require('express')
 const mysql = require("mysql2");
+const {mysqlLogin, mysqlPwd, checkToken} = require("../modules/authorization");
 const router = express.Router()
 
-const mysqlLogin = 'golang'
-const mysqlPwd = 'GOlang2022RULEs+'
 
+router.use(function (req, res, next) {
+
+let check = checkUser(req, res).then((result)=>{
+    console.log(result)
+    if(result ==  false){
+        console.log('Error 403')
+        res.json({Error: 403})
+    }
+
+})
+    //console.log(check)
+next();
+});
+
+const checkUser = async(req, res)=> {
+    let check = await checkToken(req.headers['device-id'], req.headers['authorization-token'])
+    // console.log(check)
+   return check
+}
 
 const listPwdController = (req, res) => {
-    // console.log(req.headers)
+    //console.log(req.headers)
 
     let connection = mysql.createConnection({
         host     : 'localhost',
@@ -74,20 +92,6 @@ const connectController = (req, res) => {
     });
 
     connection.end();
-}
-
-
-const decryptMysqlController = (req, res) => {
-
-    let hash= {iv: '620a658ae9fd09231317031181175dfb', content: '022122e37a5f11ca1767ca2006bfc7'}
-    let string = JSON.stringify(hash)
-    res.set({
-        'Content-Type': 'text/plain',
-        'charset': 'UTF-8'
-    })
-
-    res.send(string)
-    res.status(200).end()
 }
 
 router.get('/list', listPwdController)

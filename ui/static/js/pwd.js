@@ -40,7 +40,8 @@ function fillTable (){
     fetch(fillUrl,{
         method: 'GET',
         headers: {
-            'authorization-token': localStorage.token
+            'authorization-token': localStorage.token,
+            'device-id': localStorage.device
         },
     }).then((data) => data.json())
         .then((data) => {
@@ -71,7 +72,6 @@ const createDashboard = () => {
     logOutBtn.classList.remove('disabled')
     listWrapper.classList.remove('disabled')
     loginPano.remove()
-    //fillTable()
 }
 
 
@@ -79,21 +79,25 @@ const createDashboard = () => {
 function sendData(data = {}) {
     let login = inputLogin.value
     let pwd = inputPwd.value
-    let formBody = {"login": login, "pwd": pwd}
+    let formBody = "login="+login+ "&pwd="+pwd
     fetch(siteUrl+"auth/login",{
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json;charset=UTF-8'
+            'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: JSON.stringify(formBody),
+        body: formBody,
   }).then((data) => data.json())
         .then((data) => {
-            localStorage.token = data.token
-            localStorage.device = data.device
             console.log(data.response);
             if(data.response == true){
+                localStorage.token = data.token
+                localStorage.device = data.device
                 showAlert('Welcome to Dashboard', 200)
                 createDashboard()
+                fillTable()
+            }
+            if(data.response == false){
+                showAlert('<div class="uk-alert-danger" uk-alert>Authorization Error</div>', 400)
             }
         })
 
@@ -102,7 +106,7 @@ function sendData(data = {}) {
 const showAlert = (text, code)=>{
 
     UIkit.modal.alert(text).then(function () {
-        console.log('Status:' + code)
+        //console.log('Status:' + code)
     });
 }
 

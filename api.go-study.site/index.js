@@ -10,13 +10,12 @@ app.use(express.urlencoded({ extended: true })) // for parsing application/x-www
 
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept, authorization-token');
+  res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept, authorization-token, device-id');
   next();
 });
 
 app.use(function (req, res, next) {
-  checkAutorization(req, res)
-
+  console.log(req.url)
   next();
 });
 
@@ -31,10 +30,6 @@ const indexController = (req, res) => {
     'Your IP-address': IPaddr
   }
   res.json(response)
-}
-
-const checkAutorization = (req, res) => {
-  console.log(req.url)
 }
 
 app.use('/passwords', passwords);
