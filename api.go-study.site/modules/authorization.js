@@ -1,4 +1,4 @@
-const mysql = require("mysql2/promise");
+const mysql = require("mysql2");
 const {encrypt, decrypt} = require("./crypto");
 
 const fs = require('fs');
@@ -29,36 +29,36 @@ const generateToken = () => {
     connection.end();
 }
 
-const checkToken = async(deviceId, token)=>{
+const checkToken = (deviceId, token, res, next)=>{
     let hash = {}
     hash.iv = token.substring(token.length - 32)
     hash.content = token.substring(0, token.length - 32)
     const text = decrypt(hash)
     //console.log(text)
 
-const connection = await mysql.createConnection({
+const connection = mysql.createConnection({
         host     : 'localhost',
         user     : db.login,
         password : db.pwd,
         database : 'super_data'
     });
 
-    await connection.connect();
-    let result = false
+    connection.connect();
 
-    const [row, fields] = await connection.execute('SELECT * FROM `tokens` WHERE `id` = ?',[deviceId]);
-    if(row.length == 0){
-        return false
-    }
-    else{
-        if(row[0].token == token){
-            return true
-        }
-        else{
+    connection.query('SELECT * FROM `tokens` WHERE `id` = ?',[deviceId], function (error, results, fields) {
+        if (error) throw error;
+        console.log(results.length)
+        if(results.length == 0 || results[0].token != token){
+            res.status(403)
+            res.json({Error: 403})
             return false
         }
-    }
+        else{
+           return next();
+        }
+    });
 
+    connection.end();
 
 }
 

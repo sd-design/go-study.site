@@ -4,28 +4,19 @@ const {mysqlLogin, mysqlPwd, checkToken} = require("../modules/authorization");
 const router = express.Router()
 
 
-router.use(function (req, res, next) {
-
-let check = checkUser(req, res).then((result)=>{
-    console.log(result)
-    if(result ==  false){
-        console.log('Error 403')
+router.use((req, res, next) =>{
+// console.log(req.headers['authorization-token'], req.headers['device-id'])
+    if(req.headers['authorization-token'] == undefined || req.headers['authorization-token'] == undefined){
+        res.status(403)
         res.json({Error: 403})
     }
-
-})
-    //console.log(check)
-next();
+    else{
+     return checkToken(req.headers['device-id'], req.headers['authorization-token'], res, next)
+    }
 });
 
-const checkUser = async(req, res)=> {
-    let check = await checkToken(req.headers['device-id'], req.headers['authorization-token'])
-    // console.log(check)
-   return check
-}
-
 const listPwdController = (req, res) => {
-    //console.log(req.headers)
+    console.log(req.headers)
 
     let connection = mysql.createConnection({
         host     : 'localhost',
@@ -35,7 +26,6 @@ const listPwdController = (req, res) => {
     });
 
     connection.connect();
-    let result = {}
 
     connection.query('SELECT * FROM passwords', function (error, results, fields) {
         if (error) throw error;
