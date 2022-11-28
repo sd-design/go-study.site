@@ -54,6 +54,7 @@ const connection = mysql.createConnection({
             return false
         }
         else{
+            res.status(200)
            return next();
         }
     });

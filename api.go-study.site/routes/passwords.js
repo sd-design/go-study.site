@@ -30,6 +30,7 @@ const listPwdController = (req, res) => {
     connection.query('SELECT * FROM passwords', function (error, results, fields) {
         if (error) throw error;
         // console.log(results[0]);
+        res.status(200)
         res.json(results)
     });
 

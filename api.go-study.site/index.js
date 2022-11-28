@@ -10,6 +10,8 @@ app.use(express.urlencoded({ extended: true })) // for parsing application/x-www
 
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
+  // res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
   res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept, authorization-token, device-id');
   next();
 });
