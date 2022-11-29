@@ -111,7 +111,7 @@ const createToken = (req, res, result, userID) => {
     let tmp_tkn = encrypt(JSON.stringify(parts))
     // console.log(tmp_tkn)
 
-    let token = tmp_tkn.hash + tmp_tkn.iv
+    let token = tmp_tkn.content + tmp_tkn.iv
     insertDBToken(userID, token, req.headers['user-agent'], tmp_tkn.iv)
         .then((device)=>{
             let response = {response: result, token: token, device: device}

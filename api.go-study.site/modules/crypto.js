@@ -19,7 +19,7 @@ const encrypt = text => {
 
     return {
         iv: iv.toString('hex'),
-        hash: encrypted.toString('hex')
+        content: encrypted.toString('hex')
     }
 }
 

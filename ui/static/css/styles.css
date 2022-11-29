@@ -22,6 +22,22 @@ html, body, h1, h2, h3, h4, h5, h6{font-family: 'JetBrains Mono', monospace;}
 	content: "├─";
 	font-family: 'JetBrains Mono', monospace;
 }
+.system-name{
+	font-weight: 700;
+	color: #1e87f0;
+}
+
+.text-white{
+	color: #fff;
+}
+
+.uk-modal-body.uk-background-primary .uk-button-default{
+	color: #fff;
+}
+.uk-modal-body.uk-background-primary .uk-button-default:hover
+{
+	color: #b2b2b2;
+}
 
 .disabled {
 	display: none;

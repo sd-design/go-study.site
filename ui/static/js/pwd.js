@@ -9,8 +9,12 @@ const listWrapper = document.getElementById("listWrapper")
 // const loadBtn = document.getElementById("loadBtn")
 const logOutBtn = document.getElementById("logOut")
 const startFill = document.getElementById("startFill")
-
 const systemModal = document.getElementById("systemModal")
+const modalSystemName = document.getElementById("modalSystemName")
+const modalPwdText = document.getElementById("modalPwdText")
+const addSystemModal = document.getElementById("addSystemModal")
+const openModalBtn = document.getElementById("openModalBtn")
+const addSystemBtn = document.getElementById("addSystemBtn")
 
 let url = window.location.href
 let domain = (new URL(url)).hostname
@@ -27,7 +31,7 @@ const insertRow = (id, system) => {
     tdSystem.textContent = system
     let tdBtn = document.createElement('td');
     tdBtn.innerHTML =`<button class="uk-button uk-width-1-2@m uk-button-default show-pwd"
-                type="button" data-id="${id}">Посмотреть</button>`
+                type="button" data-id="${id}" onclick="getPwd(${id})">Посмотреть</button>`
     row.appendChild(tdId)
     row.appendChild(tdSystem)
     row.appendChild(tdBtn)
@@ -103,6 +107,63 @@ function sendData(data = {}) {
 
 }
 
+
+const getPwd = (id) => {
+    let formBody ="id="+id
+    fetch(siteUrl+"passwords/get_pwd",{
+        method: 'POST',
+        headers: {
+            'authorization-token': localStorage.token,
+            'device-id': localStorage.device,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formBody,
+    }).then((data) => data.json())
+        .then((data) => {
+            if(data.response == true){
+                modalSystemName.innerHTML= data.system
+                modalPwdText.innerHTML= data.password
+                UIkit.modal(systemModal).show();
+            }
+            if(data.response == false){
+                showAlert('<div class="uk-alert-danger" uk-alert>Authorization Error</div>', 400)
+            }
+        })
+
+}
+
+const addSystem = () => {
+    console.log("added")
+    let inputSystem = document.getElementById("inputSystemName")
+    let inputPwd = document.getElementById("inputSystemPwd")
+    let formBody = {system:inputSystem.value, pwd:inputPwd.value}
+    fetch(siteUrl+"passwords/add_pwd",{
+        method: 'POST',
+        headers: {
+            'authorization-token': localStorage.token,
+            'device-id': localStorage.device,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formBody),
+    }).then((data) => data.json())
+        .then((data) => {
+            if(data.response == true){
+                UIkit.modal(addSystemModal).hide();
+                startFill.innerHTML = ''
+                inputSystem.value = ''
+                inputPwd.value = ''
+                fillTable()
+            }
+            if(data.response == false){
+                showAlert('<div class="uk-alert-danger" uk-alert>Server error</div>', 400)
+            }
+        })
+
+
+
+
+}
+
 const showAlert = (text, code)=>{
 
     UIkit.modal.alert(text).then(function () {
@@ -113,6 +174,10 @@ const showAlert = (text, code)=>{
 submitBtn.addEventListener('click',sendData)
 // loadBtn.addEventListener('click',fillTable)
 logOutBtn.addEventListener('click', logOut)
+openModalBtn.addEventListener('click', function(){
+    UIkit.modal(addSystemModal).show();
+})
+addSystemBtn.addEventListener('click', addSystem)
 
 if(initLogin()){
     fillTable()

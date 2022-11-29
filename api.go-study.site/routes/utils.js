@@ -3,8 +3,8 @@ const {encrypt, decrypt} = require("../modules/crypto");
 const router = express.Router()
 
 const cryptoController = (req, res) => {
-    let hash = encrypt('I love cupcakes')
-    console.log(hash);
+    console.log(req.body)
+    let hash = JSON.stringify(encrypt(req.body.pwd))
     res.json({'hash': hash})
 }
 
@@ -26,7 +26,7 @@ const getTokenController = (req, res) => {
     res.json(response)
 }
 
-router.get('/hash', cryptoController)
+router.post('/hash', cryptoController)
 router.get('/read_hash', decryptController)
 router.get('/get_token', getTokenController)
 

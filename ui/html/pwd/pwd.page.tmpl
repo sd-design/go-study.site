@@ -31,13 +31,25 @@
 
 </div>
 <div id="listWrapper" class="enable disabled">
-    <div class="uk-child-width-1@m uk-grid-small uk-grid-match" uk-grid>
-        <div class="uk-margin-top list-wrapper">
-            <div class="uk-card uk-card-secondary uk-card-body">
-                <h2 class="uk-card-title">List of system</h2>
+
+        <div class="uk-child-width-1@m uk-grid-small" uk-grid>
+            <div class="uk-width-1-1 uk-margin-top">
+                <div class="uk-card uk-card-secondary uk-card-body">
+                    <div class="uk-child-width-1-2@m uk-flex">
+                        <div>
+                            <h2 class="uk-card-title">List of system</h2>
+                        </div>
+                        <div class="uk-text-right">
+                            <button class="uk-button uk-width-1-5@m uk-button-default uk-animation-scale-down uk-animation-toggle"
+                                    type="button" id="openModalBtn">Добавить
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-        </div>
         <div>
+
             <table class="uk-table uk-table-striped " id="listTable">
                 <thead>
                 <tr>
@@ -50,9 +62,7 @@
 
                 </tbody>
             </table>
-           <!-- <button class="uk-button uk-width-1-5@m uk-button-default uk-animation-scale-down uk-animation-toggle"
-                    type="button" id="loadBtn">Загрузить
-            </button> -->
+
         </div>
     </div>
 </div>
