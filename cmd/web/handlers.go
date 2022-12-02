@@ -56,7 +56,29 @@ func designIndex(w http.ResponseWriter, r *http.Request) {
 }
 
 func blogIndex(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Blog part"))
+	data := "data goes here"
+
+	files := []string{
+		"./ui/html/blog/posts_list.page.tmpl",
+		"./ui/html/menu.page.tmpl",
+		"./ui/html/blog/index.page.tmpl",
+		"./ui/html/blog/base.layout.tmpl",
+	}
+	// Use the template.ParseFiles() function to read the files and store the
+	// templates in a template set. Notice that we can pass the slice of file paths
+	// as a variadic parameter?
+	ts, err := template.ParseFiles(files...)
+	if err != nil {
+		log.Println(err.Error())
+		http.Error(w, "Internal Server Error", 500)
+		return
+	}
+	//log.Println(data.role)
+	err = ts.Execute(w, data)
+	if err != nil {
+		log.Println(err.Error())
+		http.Error(w, "Internal Server Error", 500)
+	}
 }
 
 func pwdIndex(w http.ResponseWriter, r *http.Request) {

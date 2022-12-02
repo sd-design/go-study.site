@@ -1,0 +1,33 @@
+{{template "base" .}}
+{{define "title"}}Blog root - VPS server by Golang{{end}}
+{{define "main"}}
+<div class="uk-flex">
+    <div class="uk-margin-top">
+        <h2 class="head-1 uk-text-uppercase">Golang пэт-проект на VPS</h2>
+    </div>
+    <div class="uk-margin-left uk-margin-top">
+{{template "menu" .}}
+    </div>
+</div>
+
+<div id="listWrapper" class="enable">
+
+        <div class="uk-child-width-1@m uk-grid-small" uk-grid>
+            <div class="uk-width-1-1">
+                <div class="uk-card uk-card-primary uk-card-body">
+                    <div class="uk-child-width-1-2@m">
+                        <div>
+                            <h2 class="uk-card-title uk-margin-remove-bottom">List of posts</h2>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        <div>
+
+            {{template "posts_list" .}}
+        </div>
+    </div>
+</div>
+
+{{end}}
