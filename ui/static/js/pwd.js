@@ -65,9 +65,26 @@ const initLogin = () => {
 }
 
 const logOut = () => {
-    delete localStorage.token;
-    delete localStorage.device;
-    document.location.href = "/pwd"
+    fetch(siteUrl+"auth/logout",{
+        method: 'GET',
+        headers: {
+            'authorization-token': localStorage.token,
+            'device-id': localStorage.device,
+            'Content-Type': 'application/json'
+        }
+    }).then((data) => data.json())
+        .then((data) => {
+            if(data.response == true){
+                delete localStorage.token;
+                delete localStorage.device;
+                document.location.href = "/pwd"
+            }
+            else{
+                showAlert('<div class="uk-alert-danger" uk-alert>Server error</div>', 400)
+            }
+        })
+
+
 }
 
 
@@ -158,10 +175,6 @@ const addSystem = () => {
                 showAlert('<div class="uk-alert-danger" uk-alert>Server error</div>', 400)
             }
         })
-
-
-
-
 }
 
 const showAlert = (text, code)=>{

@@ -127,9 +127,77 @@ const getHash = (req, res) => {
 }
 
 
+const deleteToken = (req, res, next) => {
+    let hash = {}
+    let token = req.headers['authorization-token']
+    let deviceId = req.headers['device-id']
+    hash.iv = token.substring(token.length - 32)
+    hash.content = token.substring(0, token.length - 32)
+    const text = decrypt(hash)
+    //console.log(text)
+
+    const connection = mysql.createConnection({
+        host     : 'localhost',
+        user     : mysqlLogin,
+        password : mysqlPwd,
+        database : 'super_data'
+    });
+
+    connection.connect();
+
+    connection.query('SELECT * FROM `tokens` WHERE `id` = ?',[deviceId], function (error, results, fields) {
+        if (error) throw error;
+        console.log(results.length)
+        if(results.length == 0 || results[0].token != token){
+            res.status(403)
+            res.json({Error: 403})
+            return false
+        }
+        else{
+            res.status(200)
+            return next();
+        }
+    });
+
+    connection.end();
+
+}
+
+const logOut = (req, res) => {
+    let token = req.headers['authorization-token'];
+    let deviceId = req.headers['device-id']
+    const connection = mysql.createConnection({
+        host     : 'localhost',
+        user     : mysqlLogin,
+        password : mysqlPwd,
+        database : 'super_data'
+    });
+
+    connection.connect();
+
+    connection.query('DELETE FROM `tokens` WHERE `id` = ? AND `token` = ?',[deviceId, token], function (error, results, fields) {
+        if (error) throw error;
+        console.log(results.length)
+        if(results.length == 0){
+            res.status(403)
+            res.json({Error: 403})
+            return false
+        }
+        else{
+            res.status(200)
+            res.json({response: true})
+        }
+    });
+
+    connection.end();
+
+}
+
+
 router.get('/get_token', getToken)
 router.get('/refresh_token', refreshToken)
 router.post('/get_hash', getHash)
 router.post('/login', loginUser)
+router.get('/logout', deleteToken, (req, res, next)=> {next()}, logOut)
 
 module.exports = router
