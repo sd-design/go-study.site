@@ -24,3 +24,4 @@ api.go-study.site/package-lock.json
 key.json
 /backup/super_data.sql
 db.json
+backup/*
