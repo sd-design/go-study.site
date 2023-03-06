@@ -15,6 +15,7 @@ const modalPwdText = document.getElementById("modalPwdText")
 const addSystemModal = document.getElementById("addSystemModal")
 const openModalBtn = document.getElementById("openModalBtn")
 const addSystemBtn = document.getElementById("addSystemBtn")
+const formWrapper = document.getElementById("formWrapper")
 
 let url = window.location.href
 let domain = (new URL(url)).hostname
@@ -98,6 +99,7 @@ const createDashboard = () => {
 
 
 function sendData(data = {}) {
+    //console.log("sendData func")
     let login = inputLogin.value
     let pwd = inputPwd.value
     let formBody = "login="+login+ "&pwd="+pwd
@@ -185,6 +187,18 @@ const showAlert = (text, code)=>{
 }
 
 submitBtn.addEventListener('click',sendData)
+formWrapper.addEventListener('keydown',(event) => {
+    const keyName = event.key;
+    if (keyName === "Enter") {
+        sendData()
+        // do not alert when only Control key is pressed.
+        return;
+    }
+
+},
+false)
+
+
 // loadBtn.addEventListener('click',fillTable)
 logOutBtn.addEventListener('click', logOut)
 openModalBtn.addEventListener('click', function(){
