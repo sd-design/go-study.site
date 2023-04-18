@@ -16,6 +16,7 @@ const addSystemModal = document.getElementById("addSystemModal")
 const openModalBtn = document.getElementById("openModalBtn")
 const addSystemBtn = document.getElementById("addSystemBtn")
 const formWrapper = document.getElementById("formWrapper")
+const btnCopy = document.getElementById("btnCopy")
 
 let url = window.location.href
 let domain = (new URL(url)).hostname
@@ -122,7 +123,9 @@ function sendData(data = {}) {
             if(data.response == false){
                 showAlert('<div class="uk-alert-danger" uk-alert>Authorization Error</div>', 400)
             }
-        })
+        }).catch(function() {
+        showAlert('<div class="uk-alert-danger" uk-alert>Server Error</div>', 400)
+    });
 
 }
 
@@ -141,7 +144,7 @@ const getPwd = (id) => {
         .then((data) => {
             if(data.response == true){
                 modalSystemName.innerHTML= data.system
-                modalPwdText.innerHTML= data.password
+                modalPwdText.value = data.password
                 UIkit.modal(systemModal).show();
             }
             if(data.response == false){
@@ -186,6 +189,18 @@ const showAlert = (text, code)=>{
     });
 }
 
+async function copyContent() {
+    let InputValue = modalPwdText.value
+    try {
+        await navigator.clipboard.writeText(InputValue);
+        alert('Pwd was copied to clipboard');
+        /* Resolved - text copied to clipboard successfully */
+    } catch (err) {
+        console.error('Failed to copy: ', err);
+        /* Rejected - text failed to copy to the clipboard */
+    }
+}
+
 submitBtn.addEventListener('click',sendData)
 formWrapper.addEventListener('keydown',(event) => {
     const keyName = event.key;
@@ -205,6 +220,7 @@ openModalBtn.addEventListener('click', function(){
     UIkit.modal(addSystemModal).show();
 })
 addSystemBtn.addEventListener('click', addSystem)
+btnCopy.addEventListener('click', copyContent)
 
 if(initLogin()){
     fillTable()
