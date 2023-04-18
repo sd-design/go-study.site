@@ -193,11 +193,16 @@ async function copyContent() {
     let InputValue = modalPwdText.value
     try {
         await navigator.clipboard.writeText(InputValue);
-        alert('Pwd was copied to clipboard');
-        /* Resolved - text copied to clipboard successfully */
+        UIkit.modal(systemModal).hide();
+
+        UIkit.notification({
+            message: 'Pwd copied to clipboard',
+            status: 'success',
+            pos: 'top-center',
+            timeout: 1500
+        });
     } catch (err) {
         console.error('Failed to copy: ', err);
-        /* Rejected - text failed to copy to the clipboard */
     }
 }
 
