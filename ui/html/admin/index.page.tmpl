@@ -1,0 +1,70 @@
+{{template "base" .}}
+{{define "title"}}Admin part - VPS server by Golang{{end}}
+{{ .Client.role}}
+{{define "main"}}
+<div class="uk-flex">
+    <div class="uk-margin-top">
+        <h2 class="head-1 uk-text-uppercase">Golang пэт-проект на VPS</h2>
+    </div>
+    <div class="uk-margin-left uk-margin-top">
+{{template "menu" .}}
+    </div>
+</div>
+
+
+<div class="uk-child-width-1-2@m uk-grid-small uk-grid-match" id="loginPano" uk-grid>
+    <div>
+        <div class="uk-card uk-card-default uk-card-body">
+            <h3 class="uk-card-title">Admin part</h3>
+<p class="fs-2">«— Чем шизофреник отличается от сисадмина? — Первый общается с кофеварками, второй — с чайниками». </p>
+<p class="text-end"><small>― Автор неизвестен</small></p>
+        </div>
+    </div>
+    <div id="formWrapper">
+        <div class="uk-card uk-card-secondary uk-card-body d-shadow-20">
+            {{template "forma" .}}
+        </div>
+    </div>
+
+
+
+
+</div>
+<div id="listWrapper" class="enable disabled">
+
+        <div class="uk-child-width-1@m uk-grid-small" uk-grid>
+            <div class="uk-width-1-1 uk-margin-top">
+                <div class="uk-card uk-card-secondary uk-card-body">
+                    <div class="uk-child-width-1-2@m uk-flex">
+                        <div>
+                            <h2 class="uk-card-title">List of system</h2>
+                        </div>
+                        <div class="uk-text-right">
+                            <button class="uk-button uk-width-1-3@m uk-button-default uk-animation-scale-down uk-animation-toggle"
+                                    type="button" id="openModalBtn">Загрузить файл
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        <div>
+
+            <table class="uk-table uk-table-striped " id="listTable">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Sytem</th>
+                    <th>Pwd</th>
+                </tr>
+                </thead>
+                <tbody id="startFill">
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+{{template "modal" .}}
+{{end}}

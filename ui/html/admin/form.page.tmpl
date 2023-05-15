@@ -1,0 +1,29 @@
+{{template "base" .}}
+{{define "forma"}}
+<form id="loginForm">
+    <fieldset class="uk-fieldset">
+
+        <legend class="uk-legend">Авторизуйтесь</legend>
+
+        <div class="uk-margin">
+            <div class="uk-inline">
+                <span class="uk-form-icon" uk-icon="icon: user"></span>
+                <input class="uk-input" type="email" aria-label="Not clickable icon" id="inputLogin">
+            </div>
+        </div>
+
+        <div class="uk-margin">
+            <div class="uk-inline">
+                <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
+                <input class="uk-input" type="password" aria-label="Not clickable icon" id="inputPwd">
+            </div>
+        </div>
+
+        <div class="uk-margin">
+            <div class="uk-inline">
+                <button class="uk-button uk-button-default" id="submitBtn" type="button">Войти</button>
+            </div>
+        </div>
+    </fieldset>
+</form>
+{{end}}
