@@ -28,6 +28,7 @@ func startRouter() {
 	// Design Handlers
 	mux.HandleFunc("/design", designIndex)
 	mux.HandleFunc("/download/", downloadHandler)
+	mux.HandleFunc("/upload/", uploadFile)
 
 	// Blog Handlers
 	mux.HandleFunc("/pwd", pwdIndex)

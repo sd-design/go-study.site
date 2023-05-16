@@ -18,26 +18,24 @@
     </div>
 </div>
 
-<div id="addSystemModal" uk-modal>
-    <div class="uk-modal-dialog uk-modal-body uk-background-primary">
+<div id="uploadModal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body uk-background-default">
         <h2 class="uk-modal-title text-white">Select file</h2>
         <div class="uk-width-1">
-            <form>
+            <form action="/upload/" method="post" enctype="multipart/form-data">
                 <fieldset class="uk-fieldset">
-                <div class="uk-margin">
-                    <input class="uk-width-1 uk-input uk-form-width-medium uk-form-large" placeholder="System name" aria-label="System name" type="file" id="inputFile">
-                </div>
-                    <div class="js-upload" uk-form-custom>
-                        <input type="file" multiple>
-                        <button class="uk-button uk-button-default" type="button" tabindex="-1">Select</button>
+                    <div class="js-upload uk-width-1-1" uk-form-custom>
+                        <input type="file" name="inputFile" id="inputFile" multiple>
+                        <button class="uk-button uk-button-default uk-button-large uk-width-1-1" type="button" tabindex="-1">Select</button>
                     </div>
                 </fieldset>
-            </form>
+
 
         </div>
         <p class="uk-text-right">
-            <!-- <button class="uk-button uk-button-secondary" type="button" id="uploadFileBtn">Upload</button> -->
-            <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+          <button class="uk-button uk-button-primary" type="submit" id="uploadFileBtn">Upload</button>
+            </form>
+            <button class="uk-button uk-button-secondary uk-modal-close" type="button">Cancel</button>
         </p>
     </div>
 </div>
