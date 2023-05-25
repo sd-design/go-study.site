@@ -12,6 +12,7 @@ const uploadModal = document.getElementById("uploadModal")
 const openModalBtn = document.getElementById("openModalBtn")
 const formWrapper = document.getElementById("formWrapper")
 const btnCopy = document.getElementById("btnCopy")
+const ListFilesBtn = document.getElementById("ListFilesBtn")
 
 let url = window.location.href
 let domain = (new URL(url)).hostname
@@ -50,7 +51,39 @@ const logOut = () => {
 
 }
 
+const getFile = (id)=> {
 
+}
+
+const insertRow = (id, system) => {
+    let row = document.createElement('tr');
+    let tdId = document.createElement('td');
+    tdId.textContent = id
+    let tdSystem = document.createElement('td');
+    tdSystem.textContent = system
+    let tdBtn = document.createElement('td');
+    tdBtn.innerHTML =`<button class="uk-button uk-width-1-2@m uk-button-default show-pwd"
+                type="button" data-id="${id}" onclick="getFile(${id})">Посмотреть</button>`
+    row.appendChild(tdId)
+    row.appendChild(tdSystem)
+    row.appendChild(tdBtn)
+    // console.log(row)
+    startFill.appendChild(row)
+}
+
+function fillTable (){
+    let fillUrl = "/list_files/"
+    fetch(fillUrl,{
+        method: 'GET',
+         }).then((data) => data.json())
+        .then((data) => {
+            //console.log(data)
+              data.FileList.forEach(function(item, i,) {
+                insertRow(data.FileList[i].ID, data.FileList[i].Filename)
+            })
+        })
+
+}
 
 const createDashboard = () => {
     logOutBtn.classList.remove('disabled')
@@ -120,5 +153,6 @@ openModalBtn.addEventListener('click', function(){
 
 
 if(initLogin()){
+    fillTable()
    // ListFiles()
 }

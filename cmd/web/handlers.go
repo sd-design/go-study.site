@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"html/template"
 	"log"
 	"net/http"
@@ -153,4 +154,20 @@ func downloadHandler(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", r.Header.Get("Content-Type"))
 		http.ServeFile(w, r, "./ui/downloads/"+file)
 	}
+}
+
+func listFiles(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/list_files/" {
+		http.NotFound(w, r)
+		return
+	}
+	folder := "./ui/uploads"
+	counter, Struct := getListFiles(folder)
+	log.Println(counter)
+	//fmt.Printf("%+v", Struct)
+	data, err := json.Marshal(Struct)
+	if err != nil {
+		return
+	}
+	w.Write([]byte(data))
 }
