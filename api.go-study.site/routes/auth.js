@@ -2,7 +2,7 @@ const express = require('express')
 const mysql = require("mysql2");
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const {encrypt, decrypt} = require("../modules/crypto");
+const {encrypt, decrypt, hashUserID} = require("../modules/crypto");
 const router = express.Router()
 
 const {mysqlLogin, mysqlPwd} = require("../modules/authorization");
@@ -53,7 +53,7 @@ const loginUser = (req, res) => {
             // console.log(results[0].pwd)///////////////////////////
             bcrypt.compare(password, results[0].pwd, function(err, result) {
                 if(result){
-                    createToken(req, res, result, results[0].id)
+                    createToken(req, res, result, hashUserID(req.headers['user-agent']))
                 }
                 else{
                     res.status(401)
@@ -88,7 +88,7 @@ const insertDBToken = async (userID, token, userAgent, refreshToken) => {
         .then(
             function(res){
                 //console.log(res[0].insertId)
-                return res[0].insertId
+                return userID
             }
         )
         .catch(err =>{
@@ -114,7 +114,7 @@ const createToken = (req, res, result, userID) => {
     let token = tmp_tkn.content + tmp_tkn.iv
     insertDBToken(userID, token, req.headers['user-agent'], tmp_tkn.iv)
         .then((device)=>{
-            let response = {response: result, token: token, device: device}
+            let response = {device: device, response: result, token: token}
             res.json(response)
         })
 }
@@ -145,7 +145,7 @@ const deleteToken = (req, res, next) => {
 
     connection.connect();
 
-    connection.query('SELECT * FROM `tokens` WHERE `id` = ?',[deviceId], function (error, results, fields) {
+    connection.query('SELECT * FROM `tokens` WHERE `user_id` = ?',[deviceId], function (error, results, fields) {
         if (error) throw error;
         console.log(results.length)
         if(results.length == 0 || results[0].token != token){
@@ -175,7 +175,7 @@ const logOut = (req, res) => {
 
     connection.connect();
 
-    connection.query('DELETE FROM `tokens` WHERE `id` = ? AND `token` = ?',[deviceId, token], function (error, results, fields) {
+    connection.query('DELETE FROM `tokens` WHERE `user_id` = ? AND `token` = ?',[deviceId, token], function (error, results, fields) {
         if (error) throw error;
         console.log(results.length)
         if(results.length == 0){

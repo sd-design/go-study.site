@@ -31,7 +31,14 @@ const decrypt = hash => {
     return decrpyted.toString()
 }
 
+const hashUserID = text => {
+    text = text + Date.now()
+    let hash = crypto.createHash('md5').update(text).digest("hex")
+    return hash
+}
+
 module.exports = {
     encrypt,
-    decrypt
+    decrypt,
+    hashUserID
 }

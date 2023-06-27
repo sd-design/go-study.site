@@ -45,7 +45,7 @@ const connection = mysql.createConnection({
 
     connection.connect();
 
-    connection.query('SELECT * FROM `tokens` WHERE `id` = ?',[deviceId], function (error, results, fields) {
+    connection.query('SELECT * FROM `tokens` WHERE `user_id` = ?',[deviceId], function (error, results, fields) {
         if (error) throw error;
         console.log(results.length)
         if(results.length == 0 || results[0].token != token){

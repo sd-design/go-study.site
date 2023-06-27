@@ -52,6 +52,10 @@ function fillTable (){
     }).then((data) => data.json())
         .then((data) => {
             // console.log(data)
+            if(data.Error == '403')
+            { delete localStorage.token;
+                delete localStorage.device;
+                document.location.href = "/pwd" }
             data.forEach(function(item, i,) {
                 insertRow(data[i].id, data[i].system_name)
             })
