@@ -25,6 +25,8 @@ func startRouter() {
 	// Admin Handlers
 	mux.HandleFunc("/admin", adminIndex)
 
+	mux.HandleFunc("/contacts", contactIndex)
+
 	// Design Handlers
 	mux.HandleFunc("/design", designIndex)
 	mux.HandleFunc("/download/", downloadHandler)

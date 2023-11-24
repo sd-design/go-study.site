@@ -140,6 +140,33 @@ func adminIndex(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func contactIndex(w http.ResponseWriter, r *http.Request) {
+	ip_address := r.Header.Get("x-forwarded-for")
+	newClient := Client{"client", ip_address}
+	data := View{Client: newClient}
+
+	files := []string{
+		"./ui/html/menu.page.tmpl",
+		"./ui/html/contacts/contacts.page.tmpl",
+		"./ui/html/contacts/base.layout.tmpl",
+	}
+	// Use the template.ParseFiles() function to read the files and store the
+	// templates in a template set. Notice that we can pass the slice of file paths
+	// as a variadic parameter?
+	ts, err := template.ParseFiles(files...)
+	if err != nil {
+		log.Println(err.Error())
+		http.Error(w, "Internal Server Error", 500)
+		return
+	}
+	//log.Println(data.role)
+	err = ts.Execute(w, data)
+	if err != nil {
+		log.Println(err.Error())
+		http.Error(w, "Internal Server Error", 500)
+	}
+}
+
 func downloadHandler(w http.ResponseWriter, r *http.Request) {
 	var file string
 	file = "NaN"

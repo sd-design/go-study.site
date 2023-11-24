@@ -1,0 +1,33 @@
+{{template "base" .}}
+{{define "title"}}Contacts - VPS server by Golang{{end}}
+{{ .Client.role}}
+{{define "main"}}
+<div class="uk-child-width-1-2@m uk-grid-small uk-grid-match" uk-grid>
+    <div class="uk-padding-small uk-background-default uk-box-shadow-large uk-margin-bottom" uk-sticky="end: !.uk-margin-medium-top; offset: 0">
+        <div class="uk-flex">
+            <div class="uk-margin-top">
+                <h3 class="head-1 uk-text-uppercase">Contacts of developer</h3>
+            </div>
+            <div class="uk-margin-left uk-margin-top">
+                {{template "menu" .}}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="uk-child-width-1-2@m uk-grid-small uk-grid-match" uk-grid>
+
+        <div class="uk-card uk-card-primary uk-card-body uk-box-shadow-large uk-padding">
+            <h3 class="uk-card-title">Contact Me</h3>
+            <p class="fs-2">
+                <a class="uk-link" href="https://sd-design.tk/" target="_blank">My website</a><br>
+                <a class="uk-link" href="https://t.me/Naghtigall" target="_blank">My Telegram</a>
+            </p>
+            <p class="text-end"><small>― I will keep in touch with You</small></p>
+        </div>
+
+</div>
+
+{{end}}
