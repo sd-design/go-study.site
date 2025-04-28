@@ -20,7 +20,7 @@ const btnCopy = document.getElementById("btnCopy")
 
 let url = window.location.href
 let domain = (new URL(url)).hostname
-let siteUrl = 'https://api.go-study.space/'
+let siteUrl = 'https://api.'+ domain +'/'
 if(domain == 'localhost'){
     siteUrl = 'http://localhost:4200/'
 }
