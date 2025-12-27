@@ -16,7 +16,7 @@ const ListFilesBtn = document.getElementById("ListFilesBtn")
 
 let url = window.location.href
 let domain = (new URL(url)).hostname
-let siteUrl = 'https://api.go-study.space/'
+let siteUrl = 'https://api.go-study.ru/'
 if(domain == 'localhost'){
     siteUrl = 'http://localhost:4200/'
 }
