@@ -20,7 +20,7 @@ let siteUrl = 'https://api.'+ domain +'/'
 if(domain == 'localhost'){
     siteUrl = 'http://localhost:4200/'
 }
-let downloadUrl = 'https://'+ domain +'/uploads/'
+let downloadUrl = 'https://'+ domain +'/mydownload/'
 
 const initLogin = () => {
     if(localStorage.token && localStorage.device){
