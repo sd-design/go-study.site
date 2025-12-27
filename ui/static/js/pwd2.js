@@ -20,6 +20,7 @@ let siteUrl = 'https://api.'+ domain +'/'
 if(domain == 'localhost'){
     siteUrl = 'http://localhost:4200/'
 }
+let downloadUrl = 'https://'+ domain +'/uploads/'
 
 const initLogin = () => {
     if(localStorage.token && localStorage.device){
@@ -52,6 +53,8 @@ const logOut = () => {
 }
 
 const getFile = (id)=> {
+    var downloadLink = downloadUrl+fileName
+
 
 }
 
@@ -62,8 +65,8 @@ const insertRow = (id, system) => {
     let tdSystem = document.createElement('td');
     tdSystem.textContent = system
     let tdBtn = document.createElement('td');
-    tdBtn.innerHTML =`<button class="uk-button uk-width-1-2@m uk-button-default show-pwd"
-                type="button" data-id="${id}" onclick="getFile(${id})">Посмотреть</button>`
+    tdBtn.innerHTML =`<a class="uk-button uk-width-1-2@m uk-button-default show-pwd"
+                type="button" href="${downloadUrl}${system}" target="_blank">Посмотреть</a>`
     row.appendChild(tdId)
     row.appendChild(tdSystem)
     row.appendChild(tdBtn)
